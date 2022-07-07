@@ -53,18 +53,19 @@ def get_backtest_stats(starting_capital, date_from, date_to, trade_cost, min_day
     half_Min = max(1,MIN//2)
     df[col_3] = df['close'].shift(periods=-half_Min)
 
+  '''
   elif modality == 'ma':
     col_1 = 'ma'
     col_2 = 'close'
     df[col_1] = df[col_2].rolling(window=ma_periods).mean().tolist()
+  '''
 
 
   df = df[df[col_1].notna()]  # if np.isnan(x[col_1]): break
   df = df[df[col_3].notna()]
   df.reset_index(inplace=True)
 
-  x = df.iloc[0]
-  if x[col_1] >= x[col_2]:
+  if df.iloc[0][col_1] >= df.iloc[0][col_2]:
     direction = 1
   else:
     direction = -1
@@ -81,15 +82,15 @@ def get_backtest_stats(starting_capital, date_from, date_to, trade_cost, min_day
     if i == 0 or days_elapsed < MIN:
       pass
     else:
-      if x[col_1] > x[col_2]:
+      if x[col_1] > x[col_2]: # Pfuturo > Poggi
         if last_direction in [-1, None]:
-          if x[col_2] < x[col_3]: # voglio una salita progressiva
+          if x[col_3] > x[col_2]: # P(half)Futuro > Poggi (voglio una salita progressiva)
             v_d_trades.append({'i': i, 'direction': 1})
             last_direction = 1
             t_cost = trade_cost
       else: # close(col_2) > futuro15
         if last_direction in [1, None]:
-          if x[col_2] > x[col_3]: # voglio una discesa progressiva
+          if x[col_3] < x[col_2]: # voglio una discesa progressiva
             v_d_trades.append({'i': i, 'direction': -1})
             last_direction = -1
             t_cost = trade_cost

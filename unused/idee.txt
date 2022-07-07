@@ -1,0 +1,16 @@
+- Scarico BTC
+- Salvo in un DB SQL lite
+  tabella Ticker data
+- 
+
+
+LOGICA ALGO
+- Genero punti casuali
+- Scelgo un intervallo minimo di investimento
+- Sparo un set di indici per max e min (ogni quanto?)
+- Investo, salvo equity line e metriche
+- considera costi di transazione
+- e poi si ottimizza i giorni in base ai costi di transazione (commissione che include spread, no ovn fee)
+
+
+Poi potrei usare quella libreria con incrocio MM, RSI ecc

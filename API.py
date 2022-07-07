@@ -36,6 +36,7 @@ def create_response_json(x):
       'list': x.v_d_trades
     }
   }
+  J['chart'] = lib_produce_chart(x, J)
   return J
 
 
@@ -48,7 +49,6 @@ def API_get_backtest():
   capital, min_days, date_from, date_to, trade_cost, ma_periods = J['capital'], J['min_days'], J['date_from'], J['date_to'], J['trade_cost'], J['ma_periods']
   x = get_backtest_stats(capital, date_from, date_to, trade_cost, min_days)
   J = create_response_json(x)
-  J['chart'] = lib_produce_chart(x, J)
   return J
 
 
